@@ -8,14 +8,19 @@ public class SceneSwitcher : MonoBehaviour
 
     public void LoadMainMenu()
     {
-        
+        SceneManager.LoadScene(0);
     }
-    void LoadGameScene()
+    public void LoadGameScene()
     {
-
+        SceneManager.LoadScene(1);
     }
-    void LoadCredits()
+    public void LoadCredits()
     {
-
+        SceneManager.LoadScene(2);
+    }
+    public void ExitGame()
+    {
+        Debug.Log("Exiting Program");
+        Application.Quit();
     }
 }
