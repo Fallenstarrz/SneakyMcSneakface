@@ -2,11 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AIController : MonoBehaviour
+public class AIController : Controller
 {
     public int moveSpeed;
     public int rotationSpeed;
-    public int spawnPosition;
+    public Vector3 spawnPosition;
+    public int currentState;
+
+    enum states
+    {
+        idle,
+        pursue,
+        reset,
+        attack,
+        dead
+    };
 
 	// Use this for initialization
 	void Start ()
@@ -15,8 +25,8 @@ public class AIController : MonoBehaviour
 	}
 	
 	// Update is called once per frame
-	void Update ()
+	protected override void Update ()
     {
-		
+
 	}
 }
