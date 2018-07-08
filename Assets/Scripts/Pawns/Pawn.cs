@@ -5,27 +5,34 @@ using UnityEngine;
 public abstract class Pawn : MonoBehaviour
 {
     // Pawn specific variables
-    [SerializeField]
-    protected int moveSpeed;
-    [SerializeField]
-    protected int rotationSpeed;
-    [SerializeField]
-    protected Vector3 spawnPosition;
+    [SerializeField] protected int moveSpeed;
+    [SerializeField] protected int rotationSpeed;
+    [SerializeField] protected Vector3 spawnPosition;
+    [SerializeField] protected float attackRange;
+    [SerializeField] protected int damage;
+    [SerializeField] protected float attackCooldown;
+    [SerializeField] protected int health;
+    protected float attackCooldownCurrent;
 
     // Link Controller to pawn
     protected Controller controller;
+
+    // Target
+    protected Transform target;
+    protected Vector3 targetPosition;
     
     // Pawn Senses
     protected LineOfSight sight;
     protected Hearing hearing;
     protected NoiseMaker noiseMaker;
     protected Hitbox hitbox;
-    protected AttackRange attackRange;
 
     public virtual void Start()
     {
         // set spawn position to the position they were placed in at runtime
         spawnPosition = gameObject.transform.position;
+
+        targetPosition = spawnPosition;
 
         // Link the controller to this pawn
         controller = GetComponent<Controller>();
@@ -35,7 +42,6 @@ public abstract class Pawn : MonoBehaviour
         hearing = GetComponent<Hearing>();
         noiseMaker = GetComponent<NoiseMaker>();
         hitbox = GetComponent<Hitbox>();
-        attackRange = GetComponent<AttackRange>();
     }
     public virtual void OnDestroy()
     {
@@ -48,30 +54,33 @@ public abstract class Pawn : MonoBehaviour
         {
             controller.currentState = Controller.AIStates.reset;
         }
-        // WE NEED TO GET RID OF THIS TO TEST HEARING!!!
         if (sight.inLineOfSight())
         {
-            //controller.currentState = Controller.AIStates.pursue;
+            targetPosition = sight.target.transform.position;
+            controller.currentState = Controller.AIStates.pursue;
         }
-        //if ()
-        //{
-        //    // WE CHECK HEARING HERE!
-
-              // If hearing triggered
-              // currentState = pursue
-        //}
+        if (hearing.listenForNoise())
+        {
+            targetPosition = hearing.targetNoiseMaker.gameObject.transform.position;
+            controller.currentState = Controller.AIStates.pursue;
+        }
     }
     public virtual void statePursue()
     {
-        // Get player position
-        // slerp ai position to player position
-        // if player not in sight or hearing
-        // currentState = reset
-        // if player in attack range
-        // current state = attack
+        move();
+        rotate();
+        if (sight.inLineOfSight() == false && hearing.listenForNoise() == false)
+        {
+            controller.currentState = Controller.AIStates.pursue;
+        }
+        if (Vector3.Distance(targetPosition, transform.position) < attackRange )
+        {
+            controller.currentState = Controller.AIStates.attack;
+        }
     }
     public virtual void stateReset()
     {
+        targetPosition = spawnPosition;
         move();
         rotate();
         if (gameObject.transform.position == spawnPosition)
@@ -81,17 +90,20 @@ public abstract class Pawn : MonoBehaviour
     }
     public virtual void stateAttack()
     {
-        // deal dmg to player
-        // if player not in attack range
-        // current state = pursue
-    }
-    public virtual void stateDead()
-    {
-        Destroy(this.gameObject);
+        if (attackCooldownCurrent <= 0)
+        {
+            attack();
+        }
+        attackCooldownCurrent -= Time.deltaTime;
+        if (Vector3.Distance(targetPosition, transform.position) > attackRange)
+        {
+            controller.currentState = Controller.AIStates.pursue;
+        }
     }
     public virtual void move()
     {
-       transform.position = Vector2.MoveTowards(transform.position, spawnPosition, moveSpeed*Time.deltaTime); // Replace spawnPosition with target, and change target in reset to spawnpoint
+        transform.position = Vector2.MoveTowards(transform.position, targetPosition, moveSpeed*Time.deltaTime);
+        noiseMaker.noiseLevel = 2.0f;
     }
     public virtual void move(float moveDirection)
     {
@@ -99,7 +111,13 @@ public abstract class Pawn : MonoBehaviour
     }
     public virtual void rotate()
     {
-        transform.LookAt(spawnPosition); // Replace spawnPosition with target, and change target in reset to spawnpoint
+        Vector3 direction = targetPosition - transform.position;
+        direction.Normalize();
+        float zAngle = (Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90);
+        Quaternion targetLocation = Quaternion.Euler(0, 0, zAngle);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetLocation, rotationSpeed * Time.deltaTime);
+
+        noiseMaker.noiseLevel = 1.0f;
     }
     public virtual void rotate(float rotateDirection)
     {
@@ -107,6 +125,7 @@ public abstract class Pawn : MonoBehaviour
     }
     public virtual void attack()
     {
+        noiseMaker.noiseLevel = 4.0f;
         Debug.Log("I am a basePawn attacking");
     }
 }

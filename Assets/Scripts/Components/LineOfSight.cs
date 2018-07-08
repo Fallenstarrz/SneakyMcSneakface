@@ -14,7 +14,6 @@ public class LineOfSight : MonoBehaviour
 
     public bool inLineOfSight()
     {
-        // Something is wrong with field of view... It is too big, maybe need to divide by 2?? It is also sticking out of the right of the characters, instead of straight.
 
         Vector3 vectorToTarget = target.transform.position - transform.position;
         RaycastHit2D hitInfo = Physics2D.Raycast(transform.position, vectorToTarget, viewDistance);

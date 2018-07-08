@@ -29,10 +29,6 @@ public class ZombiePawn : Pawn
     {
         base.stateAttack();
     }
-    public override void stateDead()
-    {
-        base.stateDead();
-    }
     public override void move()
     {
         base.move();
@@ -43,6 +39,8 @@ public class ZombiePawn : Pawn
     }
     public override void attack()
     {
-        Debug.Log("I am a Zombie attacking");
+        attackCooldownCurrent = attackCooldown;
+        noiseMaker.noiseLevel = 4.0f;
+        Debug.Log("I am a Zombie Attacking");
     }
 }

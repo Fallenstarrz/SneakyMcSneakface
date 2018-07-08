@@ -15,34 +15,32 @@ public class GuardPawn : Pawn
     }
     public override void stateIdle()
     {
-
+        base.stateIdle();
     }
     public override void statePursue()
     {
-
+        base.statePursue();
     }
     public override void stateReset()
     {
-
+        base.stateReset();
     }
     public override void stateAttack()
     {
-
-    }
-    public override void stateDead()
-    {
-        base.stateDead();
+        base.stateAttack();
     }
     public override void move()
     {
-
+        base.move();
     }
     public override void rotate()
     {
-
+        base.rotate();
     }
     public override void attack()
     {
+        attackCooldownCurrent = attackCooldown;
+        noiseMaker.noiseLevel = 4.0f;
         Debug.Log("I am a guard attacking");
     }
 }

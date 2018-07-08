@@ -14,9 +14,7 @@ public abstract class Controller : MonoBehaviour
         idle,
         pursue,
         reset,
-        attack,
-        dead
-
+        attack
     };
     [SerializeField]
     public AIStates currentState;

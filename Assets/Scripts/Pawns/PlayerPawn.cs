@@ -33,10 +33,6 @@ public class PlayerPawn : Pawn
     {
 
     }
-    public override void stateDead()
-    {
-        base.stateDead();
-    }
     public override void move()
     {
         
@@ -47,14 +43,17 @@ public class PlayerPawn : Pawn
     }
     public override void move(float moveDirection)
     {
+        noiseMaker.noiseLevel = 2.0f;
         transform.Translate(0, moveDirection * Time.deltaTime * moveSpeed, 0);
     }
     public override void rotate(float rotateDirection)
     {
+        noiseMaker.noiseLevel = 1.0f;
         transform.Rotate(0, 0, rotateDirection * Time.deltaTime * rotationSpeed);
     }
     public override void attack()
     {
+        noiseMaker.noiseLevel = 4.0f;
         Debug.Log("I am a player attacking");
     }
 }
