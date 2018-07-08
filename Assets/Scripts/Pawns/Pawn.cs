@@ -18,7 +18,7 @@ public abstract class Pawn : MonoBehaviour
     protected Controller controller;
 
     // Target
-    protected Transform target;
+    [SerializeField] protected Transform target;
     protected Vector3 targetPosition;
     
     // Pawn Senses
@@ -69,9 +69,10 @@ public abstract class Pawn : MonoBehaviour
     {
         move();
         rotate();
-        if (sight.inLineOfSight() == false && hearing.listenForNoise() == false)
+        updateTarget();
+        if (sight.inLineOfSight() == false || hearing.listenForNoise() == false)
         {
-            controller.currentState = Controller.AIStates.pursue;
+            controller.currentState = Controller.AIStates.idle;
         }
         if (Vector3.Distance(targetPosition, transform.position) < attackRange )
         {
@@ -93,6 +94,7 @@ public abstract class Pawn : MonoBehaviour
         if (attackCooldownCurrent <= 0)
         {
             attack();
+            updateTarget();
         }
         attackCooldownCurrent -= Time.deltaTime;
         if (Vector3.Distance(targetPosition, transform.position) > attackRange)
@@ -127,5 +129,9 @@ public abstract class Pawn : MonoBehaviour
     {
         noiseMaker.noiseLevel = 4.0f;
         Debug.Log("I am a basePawn attacking");
+    }
+    public virtual void updateTarget()
+    {
+        targetPosition = target.transform.position;
     }
 }

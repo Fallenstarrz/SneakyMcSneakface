@@ -43,4 +43,8 @@ public class ZombiePawn : Pawn
         noiseMaker.noiseLevel = 4.0f;
         Debug.Log("I am a Zombie Attacking");
     }
+    public override void updateTarget()
+    {
+        targetPosition = target.transform.position;
+    }
 }

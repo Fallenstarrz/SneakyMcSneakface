@@ -43,4 +43,8 @@ public class GuardPawn : Pawn
         noiseMaker.noiseLevel = 4.0f;
         Debug.Log("I am a guard attacking");
     }
+    public override void updateTarget()
+    {
+        targetPosition = target.transform.position;
+    }
 }

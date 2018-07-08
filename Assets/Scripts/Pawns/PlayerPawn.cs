@@ -56,4 +56,8 @@ public class PlayerPawn : Pawn
         noiseMaker.noiseLevel = 4.0f;
         Debug.Log("I am a player attacking");
     }
+    public override void updateTarget()
+    {
+        
+    }
 }
