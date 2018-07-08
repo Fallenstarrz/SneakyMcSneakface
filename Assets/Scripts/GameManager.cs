@@ -6,9 +6,11 @@ public class GameManager : MonoBehaviour {
 
     public static GameManager instance;
 
+    public SceneSwitcher sceneScript;
+
     public GameObject player;
-    public GameObject zombie;
-    public GameObject Guard;
+    public List<GameObject> zombies;
+    public List<GameObject> guards;
 
 	// Use this for initialization
 	void Awake ()
@@ -16,16 +18,22 @@ public class GameManager : MonoBehaviour {
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject);
+            DontDestroyOnLoad(this.gameObject);
         }
-        if (instance != this)
+        else
         {
             Destroy(this.gameObject);
         }
+        sceneScript = GetComponent<SceneSwitcher>();
 	}
-	
-	// Update is called once per frame
-	void Update ()
+
+    private void Start()
+    {
+        sceneScript.LoadMainMenu();
+    }
+
+    // Update is called once per frame
+    void Update ()
     {
 		
 	}
