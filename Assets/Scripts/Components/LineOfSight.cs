@@ -18,7 +18,7 @@ public class LineOfSight : MonoBehaviour
         Vector3 vectorToTarget = target.transform.position - transform.position;
         RaycastHit2D hitInfo = Physics2D.Raycast(transform.position, vectorToTarget, viewDistance);
         Hitbox targetCollider = target.GetComponent<Hitbox>();
-        float angle = Vector3.Angle(vectorToTarget, transform.up / 4);
+        float angle = Vector3.Angle(vectorToTarget, transform.up / 2);
 
         if (targetCollider == null)
         {
@@ -30,8 +30,6 @@ public class LineOfSight : MonoBehaviour
         }
         if (angle <= fieldOfView)
         {
-            Debug.DrawRay(transform.position, vectorToTarget, Color.red, 0.5f);
-
             if (Vector3.Distance(transform.position, target.transform.position) < viewDistance)
             {
                 if (hitInfo.collider.name == targetCollider.name)
