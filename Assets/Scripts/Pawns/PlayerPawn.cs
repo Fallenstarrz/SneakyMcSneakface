@@ -60,4 +60,8 @@ public class PlayerPawn : Pawn
     {
         
     }
+    public override void updateHealth()
+    {
+
+    }
 }

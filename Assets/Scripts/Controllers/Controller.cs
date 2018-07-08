@@ -50,6 +50,7 @@ public abstract class Controller : MonoBehaviour
                 pawn.stateAttack();
                 break;
         }
+        pawn.updateHealth();
     }
 
 }

@@ -134,4 +134,8 @@ public abstract class Pawn : MonoBehaviour
     {
         targetPosition = target.transform.position;
     }
+    public virtual void updateHealth()
+    {
+
+    }
 }

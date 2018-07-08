@@ -47,4 +47,8 @@ public class GuardPawn : Pawn
     {
         targetPosition = target.transform.position;
     }
+    public override void updateHealth()
+    {
+
+    }
 }

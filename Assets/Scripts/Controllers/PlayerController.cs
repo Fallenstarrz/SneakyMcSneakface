@@ -14,6 +14,7 @@ public class PlayerController : Controller
     protected override void Update()
     {
         inputHandler();
+        pawn.updateHealth();
     }
 
     void inputHandler()
