@@ -48,13 +48,18 @@ public abstract class Pawn : MonoBehaviour
         {
             controller.currentState = Controller.AIStates.reset;
         }
-        //if (sight.inLineOfSight())
-       //{
+        // WE NEED TO GET RID OF THIS TO TEST HEARING!!!
+        if (sight.inLineOfSight())
+        {
+            //controller.currentState = Controller.AIStates.pursue;
+        }
+        //if ()
+        //{
+        //    // WE CHECK HEARING HERE!
 
+              // If hearing triggered
+              // currentState = pursue
         //}
-        // Check for player in sight or hearing
-        // If player is in line of sight or hearing triggered
-        // currentState = pursue
     }
     public virtual void statePursue()
     {

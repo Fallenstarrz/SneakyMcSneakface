@@ -9,46 +9,38 @@ public class LineOfSight : MonoBehaviour
     [Range(0, 360)]
     public float fieldOfView;
 
-    // Components
-    private Transform tf;
+    // What is the AI looking for
+    public GameObject target;
 
-    // Use this for initialization
-    void Start()
+    public bool inLineOfSight()
     {
-        tf = GetComponent<Transform>();
-    }
+        // Something is wrong with field of view... It is too big, maybe need to divide by 2?? It is also sticking out of the right of the characters, instead of straight.
 
-    public bool inLineOfSight(GameObject player)
-    {
-        Collider2D targetCollider = player.GetComponent<Collider2D>();
+        Vector3 vectorToTarget = target.transform.position - transform.position;
+        RaycastHit2D hitInfo = Physics2D.Raycast(transform.position, vectorToTarget, viewDistance);
+        Hitbox targetCollider = target.GetComponent<Hitbox>();
+        float angle = Vector3.Angle(vectorToTarget, transform.up / 4);
+
         if (targetCollider == null)
         {
             return false;
         }
-
-        Transform targetTransform = player.GetComponent<Transform>();
-        Vector3 vectorToTarget = targetTransform.position - tf.position;
-
-        float angle = Vector3.Angle(vectorToTarget, tf.right);
-
-        if (angle >= fieldOfView)
-        {
-            return false;
-        }
-
-        RaycastHit2D hitInfo = Physics2D.Raycast(tf.position, vectorToTarget, viewDistance);
-        Debug.DrawRay(tf.position, vectorToTarget, Color.red, viewDistance);
-
         if (hitInfo.collider == null)
         {
             return false;
         }
-
-        if (hitInfo.collider == targetCollider)
+        if (angle <= fieldOfView)
         {
-            return true;
-        }
+            Debug.DrawRay(transform.position, vectorToTarget, Color.red, 0.5f);
 
-        return false;
+            if (Vector3.Distance(transform.position, target.transform.position) < viewDistance)
+            {
+                if (hitInfo.collider.name == targetCollider.name)
+                {
+                    return true;
+                }
+            }
+        }
+            return false;
     }
 }

@@ -11,7 +11,7 @@ public class ZombiePawn : Pawn
     }
     public override void OnDestroy()
     {
-        base.OnDestroy();
+        GameManager.instance.zombies.Remove(this.gameObject);
     }
     public override void stateIdle()
     {

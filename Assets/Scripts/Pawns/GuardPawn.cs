@@ -6,12 +6,12 @@ public class GuardPawn : Pawn
 {
     public override void Start()
     {
-        GameManager.instance.zombies.Add(this.gameObject);
+        GameManager.instance.guards.Add(this.gameObject);
         base.Start();
     }
     public override void OnDestroy()
     {
-
+        GameManager.instance.guards.Remove(this.gameObject);
     }
     public override void stateIdle()
     {
