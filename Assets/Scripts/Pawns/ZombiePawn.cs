@@ -1,12 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ZombiePawn : Pawn
 {
     public override void Start()
     {
         GameManager.instance.zombies.Add(this.gameObject);
+
+        // Set currentHealth to maxHealth at Start
+        currentHealth = maxHealth;
+
         base.Start();
     }
     public override void OnDestroy()
@@ -42,13 +47,22 @@ public class ZombiePawn : Pawn
         attackCooldownCurrent = attackCooldown;
         noiseMaker.noiseLevel = 4.0f;
         Debug.Log("I am a Zombie Attacking");
+        dealDamage();
     }
     public override void updateTarget()
     {
         targetPosition = target.transform.position;
     }
-    public override void updateHealth()
+    public override float updateHealth()
     {
-
+        return currentHealth;
+    }
+    public override void dealDamage()
+    {
+        base.dealDamage();
+    }
+    public override void takeDamage(int damageToTake)
+    {
+        currentHealth -= damageToTake;
     }
 }

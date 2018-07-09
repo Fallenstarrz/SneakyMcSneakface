@@ -42,7 +42,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1616323031486476}
   m_LocalRotation: {x: -0, y: -0, z: 0.39595702, w: 0.91826904}
-  m_LocalPosition: {x: 4.8072104, y: -2.650283, z: 2.25734}
+  m_LocalPosition: {x: 4.8072104, y: -2.650283, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -118,10 +118,11 @@ MonoBehaviour:
   moveSpeed: 2
   rotationSpeed: 150
   spawnPosition: {x: 0, y: 0, z: 0}
-  attackRange: 1
+  attackRange: 0.5
   damage: 10
   attackCooldown: 1
-  health: 100
+  currentHealth: 100
+  maxHealth: 100
   target: {fileID: 0}
 --- !u!114 &114334026556261444
 MonoBehaviour:

@@ -11,7 +11,8 @@ public abstract class Pawn : MonoBehaviour
     [SerializeField] protected float attackRange;
     [SerializeField] protected int damage;
     [SerializeField] protected float attackCooldown;
-    [SerializeField] protected int health;
+    [SerializeField] protected float currentHealth;
+    [SerializeField] protected float maxHealth;
     protected float attackCooldownCurrent;
 
     // Link Controller to pawn
@@ -30,7 +31,7 @@ public abstract class Pawn : MonoBehaviour
     public virtual void Start()
     {
         // set spawn position to the position they were placed in at runtime
-        spawnPosition = gameObject.transform.position;
+        spawnPosition = transform.position;
 
         targetPosition = spawnPosition;
 
@@ -50,7 +51,7 @@ public abstract class Pawn : MonoBehaviour
     public virtual void stateIdle()
     {
 
-        if (gameObject.transform.position != spawnPosition)
+        if (transform.position != spawnPosition)
         {
             controller.currentState = Controller.AIStates.reset;
         }
@@ -70,7 +71,7 @@ public abstract class Pawn : MonoBehaviour
         move();
         rotate();
         updateTarget();
-        if (sight.inLineOfSight() == false || hearing.listenForNoise() == false)
+        if (sight.inLineOfSight() == false && hearing.listenForNoise() == false)
         {
             controller.currentState = Controller.AIStates.idle;
         }
@@ -84,7 +85,7 @@ public abstract class Pawn : MonoBehaviour
         targetPosition = spawnPosition;
         move();
         rotate();
-        if (gameObject.transform.position == spawnPosition)
+        if (transform.position == spawnPosition)
         {
             controller.currentState = Controller.AIStates.idle;
         }
@@ -134,8 +135,17 @@ public abstract class Pawn : MonoBehaviour
     {
         targetPosition = target.transform.position;
     }
-    public virtual void updateHealth()
+    public virtual float updateHealth()
     {
 
+        return currentHealth;
+    }
+    public virtual void dealDamage()
+    {
+        target.gameObject.GetComponent<Pawn>().takeDamage(damage);
+    }
+    public virtual void takeDamage(int damageToTake)
+    {
+        currentHealth -= damageToTake;
     }
 }

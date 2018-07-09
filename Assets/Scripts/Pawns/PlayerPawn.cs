@@ -1,9 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerPawn : Pawn
 {
+    public Slider healthBar;
+
     public void Awake()
     {
 
@@ -11,6 +14,13 @@ public class PlayerPawn : Pawn
     public override void Start()
     {
         GameManager.instance.player = this.gameObject;
+
+        // Set currentHealth to maxHealth at Start
+        currentHealth = maxHealth;
+
+        // Set gui health
+        healthBar.value = updateHealth();
+
         base.Start();
     }
     public override void OnDestroy()
@@ -54,14 +64,30 @@ public class PlayerPawn : Pawn
     public override void attack()
     {
         noiseMaker.noiseLevel = 4.0f;
+        dealDamage();
         Debug.Log("I am a player attacking");
     }
     public override void updateTarget()
     {
         
     }
-    public override void updateHealth()
+    public override float updateHealth()
     {
+        return currentHealth / maxHealth;
+    }
+    public override void dealDamage()
+    {
+        
+    }
+    public override void takeDamage(int damageToTake)
+    {
+        Debug.Log("I took damage!");
+        currentHealth -= damageToTake;
+        healthBar.value = updateHealth();
 
+        if (currentHealth <= 0)
+        {
+            GameManager.instance.currentGameState = GameManager.IGameState.Credits;
+        }
     }
 }
