@@ -12,9 +12,10 @@ public class LineOfSight : MonoBehaviour
     // What is the AI looking for
     public GameObject target;
 
+    // Returns true/false to check if player is in line of sight
     public bool inLineOfSight()
     {
-
+        // Local variables
         Vector3 vectorToTarget = target.transform.position - transform.position;
         RaycastHit2D hitInfo = Physics2D.Raycast(transform.position, vectorToTarget, viewDistance);
         Hitbox targetCollider = target.GetComponent<Hitbox>();
@@ -28,6 +29,7 @@ public class LineOfSight : MonoBehaviour
         {
             return false;
         }
+        // If all 3 conditions are met then we can see target!
         if (angle <= fieldOfView)
         {
             if (Vector3.Distance(transform.position, target.transform.position) < viewDistance)

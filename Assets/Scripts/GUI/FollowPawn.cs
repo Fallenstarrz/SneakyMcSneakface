@@ -9,10 +9,12 @@ public class FollowPawn : MonoBehaviour {
     private Vector3 offset;
     public Transform target;
 
+    // sets nameplate to be above pawns
+
     // Use this for initialization
     void Start()
     {
-        //offset = transform.position - playerTransform.position;
+        //offset is how high above our target we want the nameplate to be
         offset = new Vector3 (0 , 0.5f, 0);
         pawnName.text = target.gameObject.name;
         if (target.gameObject.name == "Zombie")

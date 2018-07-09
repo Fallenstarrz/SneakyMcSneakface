@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour {
 
+    // make static instance
     public static GameManager instance;
 
+    // get scene switcher component to run as our state
     public SceneSwitcher sceneScript;
 
+    // References to hold!
     public GameObject player;
     public List<GameObject> zombies;
     public List<GameObject> guards;
@@ -15,6 +18,7 @@ public class GameManager : MonoBehaviour {
 	// Use this for initialization
 	void Awake ()
     {
+        // Singleton
         if (instance == null)
         {
             instance = this;
@@ -27,6 +31,7 @@ public class GameManager : MonoBehaviour {
         sceneScript = GetComponent<SceneSwitcher>();
 	}
 
+    // Always start game on MainMenu
     private void Start()
     {
         sceneScript.LoadMainMenu();

@@ -6,7 +6,7 @@ public class Hearing : MonoBehaviour
 {
     public NoiseMaker targetNoiseMaker;
 
-    // This just waits for a noise to happen
+    // This just waits for a noise to happen then returns true/false if a noise is or isn't heard.
     public bool listenForNoise()
     {
         if (targetNoiseMaker == null)

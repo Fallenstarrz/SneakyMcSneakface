@@ -6,7 +6,8 @@ public class PlayerController : Controller
 {
     // Use this for initialization
     protected override void Start()
-    {
+    { 
+        // run parents start function
         base.Start();
     }
 
@@ -14,9 +15,11 @@ public class PlayerController : Controller
     protected override void Update()
     {
         inputHandler();
+        // run the pawn this controller is connected to's updateHealth function
         pawn.updateHealth();
     }
 
+    // Input handler specific to playerController
     void inputHandler()
     {
         if (Input.GetButton("Attack"))

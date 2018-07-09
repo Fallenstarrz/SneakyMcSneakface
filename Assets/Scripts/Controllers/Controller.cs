@@ -9,6 +9,7 @@ public abstract class Controller : MonoBehaviour
     protected float moveDirection;
     protected float rotateDirection;
 
+    // STATE MACHINE FOR AIS
     public enum AIStates
     {
         idle,
@@ -16,6 +17,7 @@ public abstract class Controller : MonoBehaviour
         reset,
         attack
     };
+    // Current state
     [SerializeField]
     public AIStates currentState;
 
@@ -25,6 +27,7 @@ public abstract class Controller : MonoBehaviour
         pawn = GetComponent<Pawn>();
     }
 
+    // Set states below
     // Update is called once per frame
     protected virtual void Update()
     {

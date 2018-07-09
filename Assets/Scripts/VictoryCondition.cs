@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class VictoryCondition : MonoBehaviour
 {
+    // Check if player entered victory trigger box
     private void OnTriggerEnter2D(Collider2D other)
     {
         Debug.Log(other.gameObject.name);

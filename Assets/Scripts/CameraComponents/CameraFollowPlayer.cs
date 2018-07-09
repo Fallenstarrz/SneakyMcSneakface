@@ -9,10 +9,10 @@ public class CameraFollowPlayer : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
     {
-       //offset = transform.position - playerTransform.position;
        offset = transform.position - GameManager.instance.player.transform.position;
 	}
 	
+    // Tells camera to follow whatever is stored in the player.transform.position
 	// Update is called once per frame
 	void LateUpdate ()
     {
