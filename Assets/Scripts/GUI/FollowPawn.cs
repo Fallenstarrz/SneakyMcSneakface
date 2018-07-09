@@ -13,7 +13,7 @@ public class FollowPawn : MonoBehaviour {
     void Start()
     {
         //offset = transform.position - playerTransform.position;
-        offset = transform.position - target.position;
+        offset = new Vector3 (0 , 0.5f, 0);
         pawnName.text = target.gameObject.name;
         if (target.gameObject.name == "Zombie")
         {

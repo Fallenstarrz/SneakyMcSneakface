@@ -81,13 +81,12 @@ public class PlayerPawn : Pawn
     }
     public override void takeDamage(int damageToTake)
     {
-        Debug.Log("I took damage!");
         currentHealth -= damageToTake;
         healthBar.value = updateHealth();
 
         if (currentHealth <= 0)
         {
-            GameManager.instance.currentGameState = GameManager.IGameState.Credits;
+            GameManager.instance.sceneScript.LoadCredits();
         }
     }
 }

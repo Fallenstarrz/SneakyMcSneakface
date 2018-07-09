@@ -43,3 +43,15 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: UI
+    uniqueID: 3421261277
+    locked: 0
+  - name: WalkableTerrain
+    uniqueID: 118405055
+    locked: 0
+  - name: ColliderTerrain
+    uniqueID: 1684772185
+    locked: 0
+  - name: VictoryTerrain
+    uniqueID: 2700238997
+    locked: 0
